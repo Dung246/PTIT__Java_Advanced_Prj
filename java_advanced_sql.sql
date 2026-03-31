@@ -197,13 +197,14 @@ JOIN rooms r ON b.room_id = r.id;
 -- =========================
 -- SAMPLE DATA
 -- =========================
-INSERT INTO users(username, password, role, full_name, email)
+INSERT INTO users(username, password, role, full_name, email,phone)
 VALUES
-('Admin','Admin246','ADMIN','Admin','admin@gmail.com'),
-('Dũng','123456','EMPLOYEE','Trần Anh Dũng','dung@gmail.com'),
-('Khánh','123456','SUPPORT','Nguyễn Trần Bảo Khánh','khanhtrang@gmail.com'),
-('Thành','123456','SUPPORT','Nguyễn Tiến Thành','Thanhdepzai@gmail.com'),
-('Tú','123456','EMPLOYEE','Bàng Trọng Tú','bangdetam@gmail.com');
+('Admin','Admin246','ADMIN','Admin','admin@gmail.com','0946475866'),
+('Dũng','123456','EMPLOYEE','Trần Anh Dũng','dung@gmail.com','0957464231'),
+('Khánh','123456','SUPPORT','Nguyễn Trần Bảo Khánh','khanhtrang@gmail.com','0931245142'),
+('Thành','123456','SUPPORT','Nguyễn Tiến Thành','Thanhdepzai@gmail.com','0913204957'),
+('Tú','123456','EMPLOYEE','Bàng Trọng Tú','bangdetam@gmail.com','0921624143');
+
 
 
 INSERT INTO rooms(name,capacity,location)
@@ -230,3 +231,64 @@ VALUES
 ('Giải lao',14000),
 ('Chơi game',30000),
 ('Cafe',20000);
+
+-- =========================
+-- SAMPLE BOOKING (QUAN TRỌNG)
+-- =========================
+
+-- Booking 1: PENDING (chưa phân công)
+INSERT INTO bookings (
+    user_id,
+    room_id,
+    start_time,
+    end_time,
+    participant_count,
+    status,
+    support_status,
+    support_staff_id
+)
+VALUES (
+    2,
+    1,
+    '2026-04-01 09:00:00',
+    '2026-04-01 11:00:00',
+    5,
+    'PENDING',
+    'PREPARING',
+    NULL
+);
+
+-- Booking 2: PENDING (khác thời gian để tránh trùng)
+INSERT INTO bookings (
+    user_id,
+    room_id,
+    start_time,
+    end_time,
+    participant_count,
+    status,
+    support_status,
+    support_staff_id
+)
+VALUES (
+    5,
+    2,
+    '2026-04-02 14:00:00',
+    '2026-04-02 16:00:00',
+    8,
+    'PENDING',
+    'PREPARING',
+    NULL
+);
+
+-- =========================
+-- SAMPLE BOOKING - PENDING (CHO ADMIN DUYỆT)
+-- =========================
+
+INSERT INTO bookings (user_id, room_id, start_time, end_time, participant_count, status)
+VALUES
+(2, 1, '2026-04-05 08:00:00', '2026-04-05 10:00:00', 5, 'PENDING'),
+(5, 2, '2026-04-05 10:30:00', '2026-04-05 12:00:00', 8, 'PENDING'),
+(2, 3, '2026-04-06 13:00:00', '2026-04-06 15:00:00', 6, 'PENDING'),
+(5, 4, '2026-04-06 15:30:00', '2026-04-06 17:00:00', 10, 'PENDING'),
+(2, 5, '2026-04-07 09:00:00', '2026-04-07 11:00:00', 4, 'PENDING');
+
